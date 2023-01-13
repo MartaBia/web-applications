@@ -11,18 +11,27 @@ class Application < Sinatra::Base
 
   get '/' do
     return "Hello!"
-
-    # Version with erb:
-    # erb = "Hello"
   end
 
-  get '/hello' do
-    name = params[:name]
+  # -- Using instance variables and dinamics id tags ------
+  get '/name' do
+    @name = params[:name]
+    
+    return erb(:name)
+  end
 
-    return "Hello #{name}"
+  # -- Looping through arrays with erb -------
+  get '/names-array' do
+    @names = ['Anna', 'Josh', 'Marco']
+    
+    return erb(:names_array)
+  end
 
-    # Version with erb:
-    # erb = "Hello #{name}"
+  # -- Conditionals with erb ------------
+  get '/password' do
+    @password = params[:password]
+    
+    return erb(:password)
   end
 
   post '/submit' do
@@ -30,10 +39,6 @@ class Application < Sinatra::Base
     message = params[:message]
 
     return "Thanks #{name}, you sent this message: #{message}"
-
-    # Version with erb:
-    # erb = "Thanks #{name}, you sent this message: #{message}"
-    # erb :submit
   end
 
   get '/names' do
@@ -48,5 +53,10 @@ class Application < Sinatra::Base
     sorted_names = names_array.sort
 
     return sorted_names.join(',')
+  end
+
+  # -- HTML challenge: -----------
+  get '/hello' do
+    return erb(:hello)
   end
 end
