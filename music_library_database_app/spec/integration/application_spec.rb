@@ -49,13 +49,14 @@ describe Application do
   end
 
   context 'GET /artists' do
-    it "returns the list of artists" do
+    it "returns the list of the artist" do
       response = get('/artists')
 
-      expected_response = ("Pixies, ABBA, Taylor Swift, Nina Simone, Kiasmos")
-
       expect(response.status).to eq 200
-      expect(response.body).to eq expected_response
+      expect(response.body).to include('<p> Name: Pixies')
+      expect(response.body).to include('Genre: Rock </p>')
+      expect(response.body).to include('<p> Name: Nina Simone')
+      expect(response.body).to include('Genre: Pop </p>')
     end
   end
 
@@ -99,6 +100,24 @@ describe Application do
       expect(response.body).to include('<h1>Lover</h1>')
       expect(response.body).to include('Release year: 2019')
       expect(response.body).to include('Artist: Taylor Swift')
+    end
+  end
+
+  context "GET /artists/:id" do
+    it "returns the album with id 1" do
+      response = get('/artists/1')
+
+      expect(response.status).to eq 200
+      expect(response.body).to include('<h1>Pixies</h1>')
+      expect(response.body).to include('Genre: Rock')
+    end
+
+    it "returns the album with id 2" do
+      response = get('/artists/2')
+
+      expect(response.status).to eq 200
+      expect(response.body).to include('<h1>ABBA</h1>')
+      expect(response.body).to include('Genre: Pop')
     end
   end
 end

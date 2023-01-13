@@ -11,7 +11,7 @@ describe AlbumRepository do
   before(:each) do 
     reset_albums_table
   end
-
+  
   after(:each) do 
     reset_albums_table
   end

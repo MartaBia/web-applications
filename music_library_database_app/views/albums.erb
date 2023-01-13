@@ -9,9 +9,9 @@
       <% @albums.each do |album| %>
         <p> Title: <%= album.title %>
         Released: <%= album.release_year %> </p>
+        <a href="/album/<%= album.id %>" Go to the album page</a>
       <% end %>
     </div>
-
-    <!-- ... -->
+    
   </body>
 </html>
