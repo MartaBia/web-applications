@@ -14,23 +14,35 @@ class Application < Sinatra::Base
 
   DatabaseConnection.connect
 
-  get '/albums' do
-    repo = AlbumRepository.new
-    albums = repo.all
+  # -- Initial version without html: --------
 
-    response = albums.map do |album|
-      album.title
-    end.join(", ")
-
-    return response
-  end
-
-  # get '/albums/:id' do
+  # get '/albums' do
   #   repo = AlbumRepository.new
   #   albums = repo.all
 
-  #   single_album
+  #   response = albums.map do |album|
+  #     album.title
+  #   end.join(", ")
+
+  #   return response
   # end
+
+  get '/albums' do
+    repo = AlbumRepository.new
+    @albums = repo.all
+
+    return erb(:albums)
+  end
+
+  get '/albums/:id' do
+    repo = AlbumRepository.new
+    artist_repo = ArtistRepository.new
+
+    @album = repo.find(params[:id])
+    @artist = artist_repo.find(@album.artist_id)
+
+    return erb(:album)
+  end
 
   post '/albums' do
     repo = AlbumRepository.new
